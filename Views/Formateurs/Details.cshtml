@@ -1,0 +1,28 @@
+@model GestionFormation.Models.Formateur
+
+@{
+    ViewData["Title"] = "Détails du Formateur";
+}
+
+<h1>Détails du Formateur</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Nom)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Nom)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Prenom)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Prenom)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Email)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Bio)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Bio)</dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Modifier</a> |
+    <a asp-action="Index">Retour à la liste</a>
+</div>

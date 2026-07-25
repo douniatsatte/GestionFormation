@@ -1,0 +1,28 @@
+@model GestionFormation.Models.Modalite
+
+@{
+    ViewData["Title"] = "Détails de la Modalité";
+}
+
+<h1>Détails de la Modalité</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Titre</dt>
+        <dd class="col-sm-10">@Model.Titre</dd>
+
+        <dt class="col-sm-2">Type</dt>
+        <dd class="col-sm-10">@Model.Type</dd>
+
+        <dt class="col-sm-2">Contenu</dt>
+        <dd class="col-sm-10">@Model.Contenu</dd>
+
+        <dt class="col-sm-2">Module</dt>
+        <dd class="col-sm-10">@Model.Module?.Titre</dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Modifier</a> |
+    <a asp-action="Index">Retour à la liste</a>
+</div>

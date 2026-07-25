@@ -1,0 +1,40 @@
+@model GestionFormation.Models.Modalite
+
+@{
+    ViewData["Title"] = "Modifier une Modalité";
+}
+
+<h1>Modifier la Modalité</h1>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group mb-3">
+        <label asp-for="Titre" class="control-label"></label>
+        <input asp-for="Titre" class="form-control" />
+        <span asp-validation-for="Titre" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Type" class="control-label"></label>
+        <select asp-for="Type" class="form-control">
+            <option value="0">Cours</option>
+            <option value="1">Exercice</option>
+            <option value="2">Examen</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Contenu" class="control-label"></label>
+        <textarea asp-for="Contenu" class="form-control" rows="6"></textarea>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="ModuleId" class="control-label"></label>
+        <select asp-for="ModuleId" class="form-control" asp-items="ViewBag.ModuleId"></select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</form>

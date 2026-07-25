@@ -1,0 +1,37 @@
+@model GestionFormation.Models.Formation
+
+@{
+    ViewData["Title"] = "Détails de la Formation";
+}
+
+<h1>Détails de la Formation</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Titre</dt>
+        <dd class="col-sm-10">@Model.Titre</dd>
+
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+
+        <dt class="col-sm-2">Date début</dt>
+        <dd class="col-sm-10">@Model.DateDebut.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">Date fin</dt>
+        <dd class="col-sm-10">@Model.DateFin.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">Prix</dt>
+        <dd class="col-sm-10">@Model.Prix DH</dd>
+
+        <dt class="col-sm-2">Catégorie</dt>
+        <dd class="col-sm-10">@Model.Categorie?.Nom</dd>
+
+        <dt class="col-sm-2">Formateur</dt>
+        <dd class="col-sm-10">@Model.Formateur?.Nom @Model.Formateur?.Prenom</dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Modifier</a> |
+    <a asp-action="Index">Retour à la liste</a>
+</div>

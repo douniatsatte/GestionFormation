@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Formateur IA - " + ViewBag.ModuleTitre;
+}
+
+<h1>Formateur IA : @ViewBag.ModuleTitre</h1>
+
+<video id="avatar-container" autoplay playsinline style="width: 500px; height: 400px; background: black; border-radius: 8px;"></video>
+
+<div class="mt-3">
+    <button id="startBtn" class="btn btn-primary">Démarrer la présentation</button>
+</div>
+
+<div id="status" style="margin-top: 15px; font-size: 14px; color: #666;"></div>
+
+<a asp-controller="Modules" asp-action="Index" class="btn btn-secondary mt-3">Retour aux modules</a>
+
+@section Scripts {
+    <script type="module">
+        import { createClient } from "https://esm.sh/@@anam-ai/js-sdk@@latest";
+
+        const moduleId = @ViewBag.ModuleId;
+        const statusElement = document.getElementById("status");
+
+        document.getElementById("startBtn").addEventListener("click", async () => {
+            try {
+                statusElement.textContent = "Connexion en cours...";
+                const response = await fetch(`/Avatar/GetToken/${moduleId}`, { method: "POST" });
+                const data = await response.json();
+
+                const anamClient = createClient(data.token);
+                await anamClient.streamToVideoElement("avatar-container");
+                statusElement.textContent = "Connecté !";
+            } catch (error) {
+                console.error("Erreur:", error);
+                statusElement.textContent = "Échec de connexion.";
+            }
+        });
+    </script>
+}

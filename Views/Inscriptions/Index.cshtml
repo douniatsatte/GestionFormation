@@ -1,0 +1,39 @@
+@model IEnumerable<GestionFormation.Models.Inscription>
+
+@{
+    ViewData["Title"] = "Inscriptions";
+}
+
+<h1>Liste des Inscriptions</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Ajouter une inscription</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Apprenant</th>
+            <th>Formation</th>
+            <th>Date d'inscription</th>
+            <th>Statut</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Apprenant?.Nom @item.Apprenant?.Prenom</td>
+                <td>@item.Formation?.Titre</td>
+                <td>@item.DateInscription.ToShortDateString()</td>
+                <td>@item.Statut</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Modifier</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Détails</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

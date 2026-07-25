@@ -1,0 +1,42 @@
+@model GestionFormation.Models.Inscription
+
+@{
+    ViewData["Title"] = "Ajouter une Inscription";
+}
+
+<h1>Ajouter une Inscription</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group mb-3">
+        <label asp-for="ApprenantId" class="control-label"></label>
+        <select asp-for="ApprenantId" class="form-control" asp-items="ViewBag.ApprenantId">
+            <option value="">-- Choisir un apprenant --</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="FormationId" class="control-label"></label>
+        <select asp-for="FormationId" class="form-control" asp-items="ViewBag.FormationId">
+            <option value="">-- Choisir une formation --</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="DateInscription" class="control-label"></label>
+        <input asp-for="DateInscription" class="form-control" type="date" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Statut" class="control-label"></label>
+        <select asp-for="Statut" class="form-control">
+            <option value="0">En cours</option>
+            <option value="1">Terminée</option>
+            <option value="2">Abandonnée</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Créer</button>
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</form>
