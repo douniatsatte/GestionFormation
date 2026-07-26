@@ -3,20 +3,32 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Ajouter les services
 builder.Services.AddControllersWithViews();
 
-// Connexion à MySQL
+var mysqlHost = Environment.GetEnvironmentVariable("MYSQLHOST");
+string connectionString;
+
+if (!string.IsNullOrEmpty(mysqlHost))
+{
+    var mysqlPort = Environment.GetEnvironmentVariable("MYSQLPORT");
+    var mysqlDb = Environment.GetEnvironmentVariable("MYSQLDATABASE");
+    var mysqlUser = Environment.GetEnvironmentVariable("MYSQLUSER");
+    var mysqlPassword = Environment.GetEnvironmentVariable("MYSQLPASSWORD");
+
+    connectionString = $"Server={mysqlHost};Port={mysqlPort};Database={mysqlDb};User={mysqlUser};Password={mysqlPassword}";
+}
+else
+{
+    connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+}
+
 builder.Services.AddDbContext<MyContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
-    ));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
 builder.Services.AddHttpClient<GestionFormation.Services.AvatarService>();
 
 var app = builder.Build();
 
-// Configuration
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -24,17 +36,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-// IMPORTANT : cette ligne remplace MapStaticAssets()
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://0.0.0.0:{port}");
+
 app.Run();
