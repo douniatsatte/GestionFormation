@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.Json;
 
 namespace GestionFormation.Services
@@ -6,11 +6,13 @@ namespace GestionFormation.Services
     public class AvatarService
     {
         private readonly string _apiKey;
+        private readonly string _personaId;
         private readonly HttpClient _httpClient;
 
         public AvatarService(IConfiguration config, HttpClient httpClient)
         {
-            _apiKey = config["AnamSettings:ApiKey"];
+            _apiKey = Environment.GetEnvironmentVariable("ANAM_API_KEY") ?? config["AnamSettings:ApiKey"];
+            _personaId = Environment.GetEnvironmentVariable("ANAM_PERSONA_ID") ?? config["AnamSettings:PersonaId"];
             _httpClient = httpClient;
         }
 
@@ -28,7 +30,7 @@ namespace GestionFormation.Services
                     avatarModel = "cara-4",
                     voiceId = "6bfbe25a-979d-40f3-a92b-5394170af54b",
                     llmId = "a7cf662c-2ace-4de1-a21e-ef0fbf144bb7",
-                    systemPrompt = $"systemPrompt = $\"Tu es un formateur pédagogue qui s'exprime UNIQUEMENT en français, avec un français clair et professionnel. Ne mélange jamais l'anglais dans tes réponses, même pour des termes techniques (traduis-les en français). Voici le contenu du module à présenter à l'apprenant : {{contenuModule}}. Présente ce contenu de façon claire et réponds aux questions de l'apprenant sur ce sujet uniquement, toujours en français."
+                    systemPrompt = $"Tu es un formateur pédagogue qui s'exprime UNIQUEMENT en français. Voici le contenu du module à présenter à l'apprenant : {contenuModule}. Présente ce contenu de façon claire et réponds aux questions de l'apprenant sur ce sujet uniquement, toujours en français."
                 }
             };
 
